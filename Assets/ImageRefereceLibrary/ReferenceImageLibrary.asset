@@ -16,12 +16,12 @@ MonoBehaviour:
   m_GuidHigh: 14731559356610644415
   m_Images:
   - m_SerializedGuid:
-      m_GuidLow: 5260229026275077968
-      m_GuidHigh: 2287024512230301866
+      m_GuidLow: 5591320601725740156
+      m_GuidHigh: 17263470847228283526
     m_SerializedTextureGuid:
       m_GuidLow: 9575954555897743839
       m_GuidHigh: 14186269216963048665
-    m_Size: {x: 0.075, y: 0.1}
-    m_SpecifySize: 1
-    m_Name: book
-    m_Texture: {fileID: 2800000, guid: d99189df9fee84e4d93424d5b0c0dfc4, type: 3}
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: bookFinal
+    m_Texture: {fileID: 0}
