@@ -8,14 +8,7 @@ public class Instrument : MonoBehaviour
 {   
     public InstruConnector connection1;
 
-    public InstruConnector connection2;
-    
-    Text text = null;
-
-    private void Start()
-    {
-        text = gameObject.transform.GetComponentInChildren<Text>();
-    }
+    public InstruConnector connection2;        
 
     public bool IsConnected()
     {
@@ -53,14 +46,10 @@ public class Instrument : MonoBehaviour
             }
         }
     }
-
-    public void SetText()
+    
+    public void DisconnectConnections()
     {
-        text.text = gameObject.name;
-    }
-
-    public void SetText(string someText)
-    {
-        text.text = someText;
+        connection1.DisconnectConnections();
+        connection2.DisconnectConnections();
     }
 }

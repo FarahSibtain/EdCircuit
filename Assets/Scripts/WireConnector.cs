@@ -43,7 +43,10 @@ public class WireConnector : MonoBehaviour
 
     public string GetConnectedInstrumentName()
     {
-        return ConnectedInstrument.gameObject.name;
+        if (ConnectedInstrument == null)
+            return "";
+        else
+            return ConnectedInstrument.gameObject.name;
     }
 
     void ResetPosition()

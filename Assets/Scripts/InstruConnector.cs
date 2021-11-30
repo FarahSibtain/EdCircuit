@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +10,7 @@ public class InstruConnector : MonoBehaviour
     Instrument parentInstrument = null;
     List<Wire> ConnectedWires = null;
     AudioSource connectionSound = null;
-    Text errorText = null;
+    Text errorText = null;    
 
     public bool IsConnected()
     {
@@ -21,16 +22,15 @@ public class InstruConnector : MonoBehaviour
         parentInstrument = gameObject.transform.parent.GetComponent<Instrument>();
         ConnectedWires = new List<Wire>();
         errorText = GameObject.Find("DisconnectionIndicator").GetComponent<Text>();
-        connectionSound = GameObject.Find("ConnectionSound").GetComponent<AudioSource>();
-    }
+        connectionSound = GameObject.Find("ConnectionSound").GetComponent<AudioSource>();        
+    }    
 
     private void ApplyConnection(Collision collision)
     {
         Vector3 pos = gameObject.transform.position;
         collision.gameObject.transform.position = collision.GetContact(0).point;// new Vector3(pos.x, pos.y + 0.001f, pos.z);        
         FixedJoint joint = gameObject.AddComponent<FixedJoint>();
-        joint.connectedBody = collision.rigidbody;
-        joint.enableCollision = false;
+        joint.connectedBody = collision.rigidbody;        
         collision.rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
         connectionSound.Play();
@@ -44,30 +44,33 @@ public class InstruConnector : MonoBehaviour
         errorText.text = "";
     }
 
-    private void DisconnectConnections()
+    public void DisconnectConnections()
     {
-        errorText.text = "Douple Tap received! Disconnecting all connections";
-        //Disconnect the connection
-        FixedJoint[] fjComponents = gameObject.GetComponents<FixedJoint>();
-        foreach (FixedJoint comp in fjComponents)
+        if (isConnected)
         {
-            Rigidbody obj = comp.connectedBody;    
-            if (obj != null)
+            errorText.text = "Disconnecting all connections";
+            //Disconnect the connection
+            FixedJoint[] fjComponents = gameObject.GetComponents<FixedJoint>();
+            foreach (FixedJoint comp in fjComponents)
             {
-                obj.SendMessage("DisconnectInstrument");
-                obj.constraints = RigidbodyConstraints.FreezeAll;
-            }
-            else
-            {
-                errorText.text = "No rigidbody was found in the joint";
-            }
-            
-            Destroy(comp);           
-        }        
+                Rigidbody obj = comp.connectedBody;
+                if (obj != null)
+                {
+                    obj.SendMessage("DisconnectInstrument");
+                    obj.constraints = RigidbodyConstraints.FreezeAll;
+                }
+                else
+                {
+                    errorText.text = "No rigidbody was found in the joint";
+                }
 
-        //Reset connected game object information
-        isConnected = false;
-        ConnectedWires = new List<Wire>();        
+                Destroy(comp);
+            }
+
+            //Reset connected game object information
+            isConnected = false;
+            ConnectedWires = new List<Wire>();
+        }        
     }    
 
     private void OnCollisionEnter(Collision collision)
@@ -76,16 +79,7 @@ public class InstruConnector : MonoBehaviour
         {
             ApplyConnection(collision);
         }
-    }    
-
-    private void Update()
-    {
-        if (isConnected && IsDoubleTap())
-        {
-
-            DisconnectConnections();
-        }
-    }
+    }     
 
     bool IsDoubleTap()
     {

@@ -16,27 +16,36 @@ public class ConectionVerfication : MonoBehaviour
     Lamp R2;
 
     [SerializeField]
-    Instrument A1;
+    MeasuringInstruments A1;
 
     [SerializeField]
-    Instrument A2;
+    MeasuringInstruments A2;
 
     [SerializeField]
-    Instrument V1;
+    MeasuringInstruments V1;
 
     [SerializeField]
-    Instrument V2;
+    MeasuringInstruments V2;
 
     [SerializeField]
-    Instrument V3;    
+    MeasuringInstruments V3;    
 
     bool updated = false;
 
     Text errorText = null;
 
+    Button btnDisconnect = null;
+
     private void Start()
     {
         errorText = GameObject.Find("ErrorText").GetComponent<Text>();
+        btnDisconnect = GameObject.Find("btnDisconnect").GetComponent<Button>();
+        btnDisconnect.onClick.AddListener(OnDisconnectBtnClick);
+    }
+
+    private void OnDisconnectBtnClick()
+    {
+        DisconnectConnections();
     }
 
     // Update is called once per frame
@@ -63,12 +72,12 @@ public class ConectionVerfication : MonoBehaviour
                 R1.TurnOffLight();
                 R2.TurnOffLight();
 
-                A1.SetText();
-                A2.SetText();
+                A1.SetText("");
+                A2.SetText("");
 
-                V1.SetText();
-                V2.SetText();
-                V3.SetText();
+                V1.SetText("");
+                V2.SetText("");
+                V3.SetText("");
             }
         }        
     }
@@ -82,7 +91,7 @@ public class ConectionVerfication : MonoBehaviour
         }
 
         // Verification 2: Check if Battery is connected with Ammeters 
-       /* List<string> connectedInstrumentsNames = Battery.GetConnectedInstrumentNames();
+        List<string> connectedInstrumentsNames = Battery.GetConnectedInstrumentNames();
         if (!VerifyConnectedInstrumentNames(connectedInstrumentsNames, "A1", "A2"))
         {
             errorText.text = "Connected both Ammeters to Battery";
@@ -90,10 +99,11 @@ public class ConectionVerfication : MonoBehaviour
         }
 
         //Verification 3: V3 is connected with R1 & R2
-        List<string> V3connectedInstrumentsNames = V3.GetConnectedInstrumentNames();
+        connectedInstrumentsNames = V3.GetConnectedInstrumentNames();
         if (!VerifyConnectedInstrumentNames(connectedInstrumentsNames, "R1", "R2"))
         {
-            errorText.text = "Connect V3 to R1 and R2";
+            errorText.text = "Connected Instruments: " + connectedInstrumentsNames.ToString();
+            errorText.text += "Connect V3 to R1 and R2";
             return false;
         }
 
@@ -111,7 +121,7 @@ public class ConectionVerfication : MonoBehaviour
         {
             errorText.text = "Connect V1 and V2 to measure voltage of either R1 or R2 singly. Check V1";
             return false;
-        }*/
+        }
 
         //After all verifications turn on the Lamps by returning true
         errorText.text = "Success!!!";
@@ -134,9 +144,7 @@ public class ConectionVerfication : MonoBehaviour
         {
             return false;
         }
-    }
-
-    
+    }   
 
     private bool AreAllInstrConnected()
     {
@@ -182,5 +190,17 @@ public class ConectionVerfication : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void DisconnectConnections()
+    {
+        Battery.DisconnectConnections();
+        R1.DisconnectConnections();
+        R2.DisconnectConnections();
+        A1.DisconnectConnections();
+        A2.DisconnectConnections();
+        V1.DisconnectConnections();
+        V2.DisconnectConnections();
+        V3.DisconnectConnections();
     }
 }

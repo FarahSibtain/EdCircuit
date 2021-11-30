@@ -22,12 +22,20 @@ public class Wire : MonoBehaviour
     public List<string> GetConnectedInstrumentNames()
     {
         List<string> connectedInstruments = new List<string>();
-        connectedInstruments.Add(connector1.GetConnectedInstrumentName());
-        if (!connectedInstruments.Contains(connector2.GetConnectedInstrumentName()))
-        {
-            connectedInstruments.Add(connector2.GetConnectedInstrumentName());
-        }
+        AddInstrumentNames(ref connectedInstruments, connector1.GetConnectedInstrumentName());
+        AddInstrumentNames(ref connectedInstruments, connector2.GetConnectedInstrumentName());        
         return connectedInstruments;
+    }
+
+    void AddInstrumentNames(ref List<string> lst, string InstrumentName)
+    {
+        if (string.IsNullOrEmpty(InstrumentName))
+            return;
+
+        if (lst.Contains(InstrumentName))
+            return;
+
+        lst.Add(InstrumentName);
     }
 
     //public string OtherConnectedInstrumentName(string instrument1)
