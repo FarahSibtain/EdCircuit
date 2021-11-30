@@ -75,7 +75,8 @@ public class TouchManager : MonoBehaviour
             float rayDistance;
             if (objPlane.Raycast(mRay, out rayDistance))
             {
-                gobj.transform.SetPositionAndRotation(mRay.GetPoint(rayDistance) + m0, Quaternion.identity);
+                //gobj.transform.SetPositionAndRotation(mRay.GetPoint(rayDistance) + m0, Quaternion.identity);
+                gobj.transform.position = mRay.GetPoint(rayDistance) + m0;
             }
             onTouchHold = false;
             //if (gobj.tag == "Player")
@@ -100,7 +101,8 @@ public class TouchManager : MonoBehaviour
                 //    
                 //}
                 rayDistance -= 0.05f;
-                gobj.transform.SetPositionAndRotation(mRay.GetPoint(rayDistance) + m0, Quaternion.identity);
+                //gobj.transform.SetPositionAndRotation(mRay.GetPoint(rayDistance) + m0, Quaternion.identity);
+                gobj.transform.position = mRay.GetPoint(rayDistance) + m0;
             }
         }       
     }

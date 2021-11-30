@@ -2,14 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Instrument : MonoBehaviour
-{
-    [SerializeField]
-    InstruConnector connection1;
+{   
+    public InstruConnector connection1;
 
-    [SerializeField]
-    InstruConnector connection2;
+    public InstruConnector connection2;
+    
+    Text text = null;
+
+    private void Start()
+    {
+        text = gameObject.transform.GetComponentInChildren<Text>();
+    }
 
     public bool IsConnected()
     {
@@ -46,5 +52,15 @@ public class Instrument : MonoBehaviour
                 connectedInstruments.Add(name);
             }
         }
+    }
+
+    public void SetText()
+    {
+        text.text = gameObject.name;
+    }
+
+    public void SetText(string someText)
+    {
+        text.text = someText;
     }
 }

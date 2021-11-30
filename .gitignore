@@ -35,3 +35,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+Assets/Obi/
+Assets/TextMesh Pro/
+Assets/InputSystem
+Assets/InputSystem/

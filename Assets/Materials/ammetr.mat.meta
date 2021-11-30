@@ -1,9 +1,8 @@
 fileFormatVersion: 2
-guid: 8d9d04260bc994f1b9d444b675212dc6
-labels:
-- ObiRope
-TextScriptImporter:
+guid: dfe8f1b09bf469b4e9ac37837caffef1
+NativeFormatImporter:
   externalObjects: {}
+  mainObjectFileID: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

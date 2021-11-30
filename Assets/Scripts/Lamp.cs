@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lamp : MonoBehaviour
+public class Lamp : Instrument
 {
     [SerializeField]
     Material turnONMaterial = null;
@@ -12,7 +12,7 @@ public class Lamp : MonoBehaviour
     Material turnOFFMaterial = null;
 
     [SerializeField]
-    GameObject[] GObjects;
+    GameObject[] GObjects = null;
 
     public void TurnOnLight()
     {
