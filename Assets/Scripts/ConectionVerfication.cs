@@ -102,8 +102,8 @@ public class ConectionVerfication : MonoBehaviour
         connectedInstrumentsNames = V3.GetConnectedInstrumentNames();
         if (!VerifyConnectedInstrumentNames(connectedInstrumentsNames, "R1", "R2"))
         {
-            errorText.text = "Connected Instruments: " + connectedInstrumentsNames.ToString();
-            errorText.text += "Connect V3 to R1 and R2";
+           // errorText.text = "Connected Instruments: " + connectedInstrumentsNames.ToString();
+            errorText.text = "Connect V3 to R1 and R2";
             return false;
         }
 
