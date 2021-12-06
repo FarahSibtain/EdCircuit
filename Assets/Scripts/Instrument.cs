@@ -20,7 +20,16 @@ public class Instrument : MonoBehaviour
         {
             return false;
         }
-    }    
+    } 
+    
+    // Are both wires connected to this instrument closed
+    public bool AreConnectedWiresClosed()
+    {
+        if (connection1.AreConnectedWiresClosed() && connection2.AreConnectedWiresClosed())
+            return true;
+
+        return false;
+    }
 
     public List<String> GetConnectedInstrumentNames()
     {

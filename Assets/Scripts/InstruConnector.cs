@@ -10,11 +10,43 @@ public class InstruConnector : MonoBehaviour
     Instrument parentInstrument = null;
     List<Wire> ConnectedWires = null;
     AudioSource connectionSound = null;
-    Text errorText = null;    
+    Text errorText = null;
 
     public bool IsConnected()
     {
         return isConnected;
+
+    }
+
+    //Is any wire connected to this connector closed
+    public bool AreConnectedWiresClosed()
+    {        
+        foreach (Wire wire in ConnectedWires)
+        {
+            if (wire.IsConnected())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    internal void DisconnectConnection(WireConnector wireConnector)
+    {
+        FixedJoint[] fjComponents = gameObject.GetComponents<FixedJoint>();
+        foreach (FixedJoint comp in fjComponents)
+        {
+            Rigidbody rigitbody1 = comp.connectedBody;
+
+            Rigidbody rigitbody2 = wireConnector.GetComponent<Rigidbody>();
+
+            if (rigitbody1 == rigitbody2)
+            {
+                Destroy(comp);
+                ConnectedWires.Remove(wireConnector.PartOfWire);
+                return;
+            }           
+        }
     }
 
     private void Start()
@@ -40,15 +72,30 @@ public class InstruConnector : MonoBehaviour
         WireConnector wireConnector = collision.gameObject.GetComponent<WireConnector>();
         Wire ConnectedWire = wireConnector.PartOfWire;
         ConnectedWires.Add(ConnectedWire);
-        wireConnector.ApplyConnection(parentInstrument);
+        //wireConnector.ApplyConnection(parentInstrument);
+        wireConnector.ApplyInstrConnection(this);
+        //errorText.text = "Connection between " + parentInstrument + " and " + ConnectedWire.name;
         errorText.text = "";
+        //errorText.text += "\nconnector name: " + this.name;
+        //errorText.text += "\nWire connector name: " + wireConnector.name;
+        //errorText.text += "\nWire connected instruments: ";
+        //List<string> instruNames = ConnectedWire.GetConnectedInstrumentNames();
+        //foreach (var instru in instruNames)
+        //{
+        //    errorText.text += instru + ", ";
+        //}
+    }
+
+    public string GetParentInstrumetName()
+    {
+        return parentInstrument.gameObject.name;
     }
 
     public void DisconnectConnections()
     {
         if (isConnected)
         {
-            errorText.text = "Disconnecting all connections";
+           // errorText.text = "Disconnecting all connections";
             //Disconnect the connection
             FixedJoint[] fjComponents = gameObject.GetComponents<FixedJoint>();
             foreach (FixedJoint comp in fjComponents)
@@ -56,13 +103,13 @@ public class InstruConnector : MonoBehaviour
                 Rigidbody obj = comp.connectedBody;
                 if (obj != null)
                 {
-                    obj.SendMessage("DisconnectInstrument");
+                    obj.SendMessage("Disconnect");
                     obj.constraints = RigidbodyConstraints.FreezeAll;
                 }
-                else
-                {
-                    errorText.text = "No rigidbody was found in the joint";
-                }
+                //else
+                //{
+                //    errorText.text = "No rigidbody was found in the joint";
+                //}
 
                 Destroy(comp);
             }
@@ -104,7 +151,6 @@ public class InstruConnector : MonoBehaviour
         foreach (Wire wire in ConnectedWires)
         {
             List<string> connectedInstr = wire.GetConnectedInstrumentNames();
-
             //if any wire is not currently connected to this instrument Connector, then remove the wire from the array
             if (!connectedInstr.Contains(parentInstrument.gameObject.name))
             {                
@@ -118,8 +164,39 @@ public class InstruConnector : MonoBehaviour
                 }
             }            
         }
-
         return connectedInstruments;
     }
+
+
+    /*public List<string> GetConnectedInstrumentNames()
+    {
+        List<string> connectedInstruments = new List<string>();
+        FixedJoint[] fjComponents = gameObject.GetComponents<FixedJoint>();
+        foreach (FixedJoint comp in fjComponents)
+        {
+            Rigidbody obj = comp.connectedBody;
+            if (obj != null)
+            {
+                WireConnector wireConn = obj.GetComponent<WireConnector>();
+                Wire parentWire = wireConn.PartOfWire;
+
+                List<string> connectedInstr = parentWire.GetConnectedInstrumentNames();
+
+                foreach (string instrumentname in connectedInstr)
+                {
+                    if (!connectedInstruments.Contains(instrumentname))
+                    {
+                        connectedInstruments.Add(instrumentname);
+                    }
+                }
+            }
+            else
+            {
+                errorText.text = "No rigidbody was found in the joint";
+            }            
+        }
+        
+        return connectedInstruments;
+    }*/
 
 }

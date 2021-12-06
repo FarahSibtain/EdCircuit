@@ -6,7 +6,8 @@ public class WireConnector : MonoBehaviour
 {
     bool isConnected;
     string WireName = "";
-    Instrument ConnectedInstrument = null;
+    //Instrument ConnectedInstrument = null;
+    InstruConnector ConnectedInstrConnector = null;
 
     [SerializeField]
     public Wire PartOfWire = null;
@@ -29,24 +30,36 @@ public class WireConnector : MonoBehaviour
             ResetPosition();
     }
 
-    public void ApplyConnection(Instrument connectedInstrument)
+    public void ApplyInstrConnection(InstruConnector connectedInstrumentConnector)
     {
+        //if (isConnected)
+        //{
+        //    Disconnect();
+        //    ConnectedInstrConnector.DisconnectConnection(this);
+        //}
+
         isConnected = true;
-        ConnectedInstrument = connectedInstrument;
+        ConnectedInstrConnector = connectedInstrumentConnector;
     }
 
-    public void DisconnectInstrument()
+    //public void ApplyConnection(Instrument connectedInstrument)
+    //{
+    //    isConnected = true;
+    //    ConnectedInstrument = connectedInstrument;
+    //}
+
+    private void Disconnect()
     {
         isConnected = false;
-        ConnectedInstrument = null;
+        ConnectedInstrConnector = null;
     }
 
     public string GetConnectedInstrumentName()
     {
-        if (ConnectedInstrument == null)
+        if (ConnectedInstrConnector == null)
             return "";
         else
-            return ConnectedInstrument.gameObject.name;
+            return ConnectedInstrConnector.GetParentInstrumetName();
     }
 
     void ResetPosition()

@@ -10,7 +10,7 @@ public class Wire : MonoBehaviour
     [SerializeField]
     WireConnector connector2;    
 
-    public bool isConnected()
+    public bool IsConnected()
     {
         if (connector1.IsConnected() && connector2.IsConnected())
         {

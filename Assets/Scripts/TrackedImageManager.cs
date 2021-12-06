@@ -69,7 +69,7 @@ public class TrackedImageManager : MonoBehaviour
         // Assign and Place Game Object
         AssignGameObject(trackedImage.referenceImage.name, trackedImage.transform.position);
 
-        Debug.Log($"trackedImage.referenceImage.name: {trackedImage.referenceImage.name}");
+        //Debug.Log($"trackedImage.referenceImage.name: {trackedImage.referenceImage.name}");
     }
 
     void AssignGameObject(string name, Vector3 newPosition)

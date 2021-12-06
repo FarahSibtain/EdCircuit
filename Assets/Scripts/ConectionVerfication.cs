@@ -34,11 +34,14 @@ public class ConectionVerfication : MonoBehaviour
 
     Text errorText = null;
 
+    Text disconIndicator = null;
+
     Button btnDisconnect = null;
 
     private void Start()
     {
         errorText = GameObject.Find("ErrorText").GetComponent<Text>();
+        disconIndicator = GameObject.Find("DisconnectionIndicator").GetComponent<Text>();
         btnDisconnect = GameObject.Find("btnDisconnect").GetComponent<Button>();
         btnDisconnect.onClick.AddListener(OnDisconnectBtnClick);
     }
@@ -51,7 +54,7 @@ public class ConectionVerfication : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (DoAllVerifications())
+        if (MainCircuitVerifications())
         {
             R1.TurnOnLight();
             R2.TurnOnLight();
@@ -59,11 +62,36 @@ public class ConectionVerfication : MonoBehaviour
             A1.SetText("3 A");
             A2.SetText("3 A");
 
-            V1.SetText("6 V");
-            V2.SetText("6 V");
-            V3.SetText("12 V");
+            errorText.text = "Success!!!";
 
             updated = true;
+
+            if (VerifyVoltages(V1))
+            {
+                V1.SetText("6 V");
+            }
+            else
+            {
+                V1.SetText("");
+            }
+
+            if (VerifyVoltages(V2))
+            {
+                V2.SetText("6 V");
+            }
+            else
+            {
+                V2.SetText("");
+            }
+
+            if (VerifyV3Voltage())
+            {
+                V3.SetText("12 V");
+            }
+            else
+            {
+                V3.SetText("");
+            }            
         }
         else
         {
@@ -82,10 +110,9 @@ public class ConectionVerfication : MonoBehaviour
         }        
     }
 
-    bool DoAllVerifications()
+    bool MainCircuitVerifications()
     {
-        //Verification 1: Check if all instruments are connected
-        if (!AreAllInstrConnected())
+        if (!MainCircuitConnected())
         {
             return false;
         }
@@ -94,37 +121,56 @@ public class ConectionVerfication : MonoBehaviour
         List<string> connectedInstrumentsNames = Battery.GetConnectedInstrumentNames();
         if (!VerifyConnectedInstrumentNames(connectedInstrumentsNames, "A1", "A2"))
         {
-            errorText.text = "Connected both Ammeters to Battery";
+            errorText.text = "Connect both Ammeters to Battery ";
+            return false;
+        }       
+
+        //Verify that R1 and R2 are connected
+        connectedInstrumentsNames = R1.GetConnectedInstrumentNames();
+        if (!connectedInstrumentsNames.Contains("R2"))
+        {
+            errorText.text = "Connect R1 and R2";
             return false;
         }
+        return true;
+    }    
 
-        //Verification 3: V3 is connected with R1 & R2
-        connectedInstrumentsNames = V3.GetConnectedInstrumentNames();
-        if (!VerifyConnectedInstrumentNames(connectedInstrumentsNames, "R1", "R2"))
+    bool VerifyVoltages(MeasuringInstruments Voltmeter)
+    {
+        if (!Voltmeter.IsConnected() || !Voltmeter.AreConnectedWiresClosed())
         {
-           // errorText.text = "Connected Instruments: " + connectedInstrumentsNames.ToString();
-            errorText.text = "Connect V3 to R1 and R2";
+            errorText.text = Voltmeter.gameObject.name + " or it's wire is not connected";
             return false;
         }
 
         //Verification 4: V1 & V2 are connected with either R1 or R2
-        List<string> VconnectedInstrumentsNames = V2.GetConnectedInstrumentNames();
+        List<string> VconnectedInstrumentsNames = Voltmeter.GetConnectedInstrumentNames();
         if (!(VconnectedInstrumentsNames.Count == 1 && (VconnectedInstrumentsNames[0] == "R1" || VconnectedInstrumentsNames[0] == "R2")))
         {
-            errorText.text = "Connect V1 and V2 to measure voltage of either R1 or R2 singly. Check V2";
+            errorText.text = "Connect V1 and V2 to R1 or R2 singly. Check " + Voltmeter.gameObject.name;
             return false;
         }
+       
+        return true;
+    }
 
-        string remainingVoltageName = VconnectedInstrumentsNames[0] == "R1" ? "R2" : "R1";
-        VconnectedInstrumentsNames = V1.GetConnectedInstrumentNames();
-        if (!(VconnectedInstrumentsNames.Count == 1 && VconnectedInstrumentsNames[0] == remainingVoltageName))
+    bool VerifyV3Voltage()
+    {
+        if (!V3.IsConnected())
         {
-            errorText.text = "Connect V1 and V2 to measure voltage of either R1 or R2 singly. Check V1";
+            errorText.text = "V3 is not connected";
             return false;
         }
 
-        //After all verifications turn on the Lamps by returning true
-        errorText.text = "Success!!!";
+        //Verification 3: V3 is connected with R1 & R2
+        List<string> connectedInstrumentsNames = V3.GetConnectedInstrumentNames();
+        if (!VerifyConnectedInstrumentNames(connectedInstrumentsNames, "R1", "R2"))
+        {
+            // errorText.text = "Connected Instruments: " + connectedInstrumentsNames.ToString();
+            errorText.text = "Connect V3 to R1 and R2";
+            return false;
+        }        
+
         return true;
     }
 
@@ -144,56 +190,42 @@ public class ConectionVerfication : MonoBehaviour
         {
             return false;
         }
-    }   
+    }
 
-    private bool AreAllInstrConnected()
+    bool MainCircuitConnected()
     {
-        if (!Battery.IsConnected())
+        if (!Battery.IsConnected() || !Battery.AreConnectedWiresClosed())
         {
-            errorText.text = "Battery is not connected";
+            errorText.text = "Battery/Battery Wire is not connected";
             return false;
         }
-        else if (!A1.IsConnected())
+        else if (!A1.IsConnected() || !A1.AreConnectedWiresClosed())
         {
-            errorText.text = "A1 is not connected";
+            errorText.text = "A1/A1 Wire is not connected";
             return false;
         }
-        else if (!A2.IsConnected())
+        else if (!A2.IsConnected() || !A2.AreConnectedWiresClosed())
         {
-            errorText.text = "A2 is not connected";
+            errorText.text = "A2/A2 Wire is not connected";
             return false;
         }
-        else if (!R1.IsConnected())
+        else if (!R1.IsConnected() || !R1.AreConnectedWiresClosed())
         {
-            errorText.text = "R1 is not connected";
+            errorText.text = "R1/R1 Wire is not connected";
             return false;
         }
-        else if (!R2.IsConnected())
+        else if (!R2.IsConnected() || !R2.AreConnectedWiresClosed())
         {
-            errorText.text = "R2 is not connected";
-            return false;
-        }
-        else if (!V1.IsConnected())
-        {
-            errorText.text = "V1 is not connected";
-            return false;
-        }
-        else if (!V2.IsConnected())
-        {
-            errorText.text = "V2 is not connected";
-            return false;
-        }
-        else if (!V3.IsConnected())
-        {
-            errorText.text = "V3 is not connected";
+            errorText.text = "R2/R2 Wire is not connected";
             return false;
         }
 
         return true;
-    }
+    }    
 
     public void DisconnectConnections()
     {
+        disconIndicator.text = "Disconnecting all connections";
         Battery.DisconnectConnections();
         R1.DisconnectConnections();
         R2.DisconnectConnections();
