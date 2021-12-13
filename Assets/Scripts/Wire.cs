@@ -27,6 +27,37 @@ public class Wire : MonoBehaviour
         return connectedInstruments;
     }
 
+    public List<string> GetConnectedInstrumentNames(string instrumentName)
+    {
+        List<string> connectedInstruments = GetConnectedInstrumentNames();
+
+        if (connectedInstruments.Contains(instrumentName))
+        {
+            connectedInstruments.Remove(instrumentName);
+            return connectedInstruments;
+        }
+        else
+        {
+            // Something is wrong therefore returning null
+            return null;
+        }
+    }
+
+    public List<string> GetConnectedInstrumentNames(List<string> instrumentNames)
+    {
+        List<string> connectedInstruments = GetConnectedInstrumentNames();
+
+        foreach(string instrumentName in instrumentNames)
+        {
+            if (connectedInstruments.Contains(instrumentName))
+            {
+                connectedInstruments.Remove(instrumentName);                
+            }            
+        }
+
+        return connectedInstruments;
+    }
+
     void AddInstrumentNames(ref List<string> lst, string InstrumentName)
     {
         if (string.IsNullOrEmpty(InstrumentName))

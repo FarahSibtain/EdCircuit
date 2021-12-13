@@ -60,7 +60,7 @@ public class InstruConnector : MonoBehaviour
     private void ApplyConnection(Collision collision)
     {
         Vector3 pos = gameObject.transform.position;
-        collision.gameObject.transform.position = collision.GetContact(0).point;// new Vector3(pos.x, pos.y + 0.001f, pos.z);        
+        collision.gameObject.transform.position = new Vector3(pos.x, pos.y + 0.001f, pos.z); //       collision.GetContact(0).point;
         FixedJoint joint = gameObject.AddComponent<FixedJoint>();
         joint.connectedBody = collision.rigidbody;        
         collision.rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
@@ -126,24 +126,7 @@ public class InstruConnector : MonoBehaviour
         {
             ApplyConnection(collision);
         }
-    }     
-
-    bool IsDoubleTap()
-    {
-        bool result = false;
-        float MaxTimeWait = 0.5f;
-        float VariancePosition = 1;
-
-        if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)
-        {
-            float DeltaTime = Input.GetTouch(0).deltaTime;
-            float DeltaPositionLenght = Input.GetTouch(0).deltaPosition.magnitude;
-
-            if (DeltaTime > 0 && DeltaTime < MaxTimeWait && DeltaPositionLenght < VariancePosition)
-                result = true;
-        }
-        return result;
-    }
+    }    
 
     public List<string> GetConnectedInstrumentNames()
     {
@@ -165,6 +148,26 @@ public class InstruConnector : MonoBehaviour
             }            
         }
         return connectedInstruments;
+    }
+
+    public List<Wire> GetConnectedWires()
+    {
+        if (ConnectedWires.Count > 0)
+            return ConnectedWires;
+        else
+            return null;
+    }
+
+    public bool ContainsWire(Wire wire)
+    {
+        if (ConnectedWires.Contains(wire))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 

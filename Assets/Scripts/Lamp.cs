@@ -14,6 +14,8 @@ public class Lamp : Instrument
     [SerializeField]
     GameObject[] GObjects = null;
 
+    Material appliedMaterial = null;
+
     public void TurnOnLight()
     {
         SetMaterial(turnONMaterial);
@@ -26,9 +28,14 @@ public class Lamp : Instrument
 
     private void SetMaterial(Material material)
     {
-        foreach(GameObject obj in GObjects)
+        if (appliedMaterial == material)
+            return;
+        else
+            appliedMaterial = material;
+
+        foreach (GameObject obj in GObjects)
         {
-            obj.GetComponent<Renderer>().material = material;
+            obj.GetComponent<Renderer>().material = appliedMaterial;
         }
     }    
 }

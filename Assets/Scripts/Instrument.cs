@@ -40,6 +40,44 @@ public class Instrument : MonoBehaviour
         return connectedInstruments;
     }
 
+    public Wire GetOtherConnectedWire(Wire wire)
+    {
+        List<Wire> wires = new List<Wire>();
+
+        List<Wire> wiresLst1 = connection1.GetConnectedWires();
+        List<Wire> wiresLst2 = connection2.GetConnectedWires();
+
+        if (wiresLst1 != null)
+            wires.AddRange(wiresLst1);
+        if (wiresLst2 != null)
+            wires.AddRange(wiresLst2);
+
+        wires.RemoveAll(Connectedwire => Connectedwire.name == wire.name);
+
+        if (wires.Count == 0)
+            return null;
+        else
+            return wires[0];
+    }
+
+        public Wire GetConnectionWire()
+    {
+        List<Wire> wires = new List<Wire>();
+
+        List<Wire> wiresLst1 = connection1.GetConnectedWires();
+        List<Wire> wiresLst2 = connection2.GetConnectedWires();
+
+        if (wiresLst1 != null)
+            wires.AddRange(wiresLst1);
+        if (wiresLst2 != null)
+            wires.AddRange(wiresLst2);
+
+        if (wires == null || wires.Count == 0)
+           return null;
+        else
+            return wires[0];
+    }
+
     private bool ContainName(String s)
     {
         return s.Equals(this.gameObject.name);

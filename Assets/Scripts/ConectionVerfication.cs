@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ConectionVerfication : MonoBehaviour
+public class ConectionVerfication : Verifications
 {
     [SerializeField]
     Instrument Battery;
@@ -30,26 +30,7 @@ public class ConectionVerfication : MonoBehaviour
     [SerializeField]
     MeasuringInstruments V3;    
 
-    bool updated = false;
-
-    Text errorText = null;
-
-    Text disconIndicator = null;
-
-    Button btnDisconnect = null;
-
-    private void Start()
-    {
-        errorText = GameObject.Find("ErrorText").GetComponent<Text>();
-        disconIndicator = GameObject.Find("DisconnectionIndicator").GetComponent<Text>();
-        btnDisconnect = GameObject.Find("btnDisconnect").GetComponent<Button>();
-        btnDisconnect.onClick.AddListener(OnDisconnectBtnClick);
-    }
-
-    private void OnDisconnectBtnClick()
-    {
-        DisconnectConnections();
-    }
+    bool updated = false;      
 
     // Update is called once per frame
     void Update()
@@ -223,7 +204,7 @@ public class ConectionVerfication : MonoBehaviour
         return true;
     }    
 
-    public void DisconnectConnections()
+    public override void DisconnectConnections()
     {
         disconIndicator.text = "Disconnecting all connections";
         Battery.DisconnectConnections();
