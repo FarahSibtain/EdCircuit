@@ -12,7 +12,7 @@ public class TrackedImageManager : MonoBehaviour
     [SerializeField]
     private GameObject[] arObjectsToPlace;
 
-    //[SerializeField]
+    [SerializeField]
     private Vector3 scaleFactor = new Vector3(0.1f, 0.1f, 0.1f);
 
     private ARTrackedImageManager m_TrackedImageManager;
@@ -80,17 +80,17 @@ public class TrackedImageManager : MonoBehaviour
             goARObject.SetActive(true);
             //goARObject.transform.SetPositionAndRotation(imageTransform.position, imageTransform.rotation);
             goARObject.transform.position = newPosition;
-            //goARObject.transform.localScale = scaleFactor;
+            goARObject.transform.localScale = scaleFactor;
             foreach (GameObject go in arObjects.Values)
             {
                 //Debug.Log($"Go in arObjects.Values: {go.name}");
                 if (go.name != name)
                 {
-                    //go.SetActive(false);
-                    Verifications comp = go.GetComponent<Verifications>();
-                    comp.ResetInstruments();
+                    go.SetActive(false);
+                    //Verifications comp = go.GetComponent<Verifications>();
+                    //comp.ResetInstruments();
 
-                    go.transform.position = new Vector3(500f, 500f, 500f);
+                    //go.transform.position = new Vector3(500f, 500f, 500f);
                 }
             }
         }

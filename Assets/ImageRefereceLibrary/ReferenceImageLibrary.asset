@@ -21,8 +21,8 @@ MonoBehaviour:
     m_SerializedTextureGuid:
       m_GuidLow: 16835743082088521083
       m_GuidHigh: 778492026997046888
-    m_Size: {x: 1, y: 0.5721344}
-    m_SpecifySize: 0
+    m_Size: {x: 0.1, y: 0.05721344}
+    m_SpecifySize: 1
     m_Name: bookFinal
     m_Texture: {fileID: 2800000, guid: 31a05d7b9322e9a468fea1b95fc2cd0a, type: 3}
   - m_SerializedGuid:
@@ -31,8 +31,8 @@ MonoBehaviour:
     m_SerializedTextureGuid:
       m_GuidLow: 8612126130201413231
       m_GuidHigh: 8492458697689253160
-    m_Size: {x: 1, y: 0.56302524}
-    m_SpecifySize: 0
+    m_Size: {x: 0.1, y: 0.05630252}
+    m_SpecifySize: 1
     m_Name: Circuit1
     m_Texture: {fileID: 2800000, guid: 1f83c66f6b16778428c571c93046db75, type: 3}
   - m_SerializedGuid:
@@ -41,7 +41,7 @@ MonoBehaviour:
     m_SerializedTextureGuid:
       m_GuidLow: 11651997844700454296
       m_GuidHigh: 11645037777631065354
-    m_Size: {x: 0, y: 0}
-    m_SpecifySize: 0
+    m_Size: {x: 0.1, y: 0.0644}
+    m_SpecifySize: 1
     m_Name: Circuit3
     m_Texture: {fileID: 2800000, guid: 08fcdd98364ea1b40a35b423297c9ba1, type: 3}

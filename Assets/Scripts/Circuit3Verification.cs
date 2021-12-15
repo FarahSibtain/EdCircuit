@@ -30,7 +30,7 @@ public class Circuit3Verification : Verifications
             Ammeter.SetText("3 A");
             if (IsVoltmeterConnected())
             {
-                Voltmeter.SetText("12 A");
+                Voltmeter.SetText("12 V");
             }
         }
         else
