@@ -100,7 +100,7 @@ public class TouchManager : MonoBehaviour
                 //{
                 //    
                 //}
-                rayDistance -= 0.05f;
+                rayDistance -= 0.01f;
                 //gobj.transform.SetPositionAndRotation(mRay.GetPoint(rayDistance) + m0, Quaternion.identity);
                 gobj.transform.position = mRay.GetPoint(rayDistance) + m0;
             }

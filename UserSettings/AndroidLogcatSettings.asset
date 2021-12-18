@@ -2,70 +2,88 @@
     "m_SelectedDeviceId": "1a27cae7",
     "m_SelectedPackage": {
         "deviceId": "1a27cae7",
-        "name": "com.DefaultCompany.EdCircuit",
-        "processId": 26342,
+        "name": "com.DefaultCompanyAR.EdCircuitAR",
+        "processId": 21888,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "1a27cae7",
-            "name": "com.DefaultCompany.EdCircuit",
-            "processId": 27512,
-            "exited": true
-        },
-        {
-            "deviceId": "1a27cae7",
-            "name": "com.DefaultCompany.EdCircuit",
-            "processId": 19840,
-            "exited": true
-        },
-        {
-            "deviceId": "1a27cae7",
-            "name": "com.DefaultCompany.EdCircuit",
-            "processId": 22010,
-            "exited": true
-        },
-        {
-            "deviceId": "1a27cae7",
-            "name": "com.DefaultCompany.EdCircuit",
-            "processId": 24274,
-            "exited": true
-        },
-        {
-            "deviceId": "1a27cae7",
-            "name": "com.DefaultCompany.EdCircuit",
-            "processId": 5074,
-            "exited": true
-        },
-        {
-            "deviceId": "1a27cae7",
-            "name": "com.DefaultCompany.EdCircuit",
-            "processId": 7961,
+            "name": "com.miui.home",
+            "processId": 2438,
             "exited": false
         },
         {
             "deviceId": "1a27cae7",
-            "name": "com.DefaultCompany.EdCircuit",
-            "processId": 19057,
+            "name": "com.DefaultCompanyAR.EdCircuitAR",
+            "processId": 16134,
+            "exited": true
+        },
+        {
+            "deviceId": "1a27cae7",
+            "name": "com.DefaultCompanyAR.EdCircuitAR",
+            "processId": 17095,
+            "exited": true
+        },
+        {
+            "deviceId": "1a27cae7",
+            "name": "com.DefaultCompanyAR.EdCircuitAR",
+            "processId": 18736,
+            "exited": true
+        },
+        {
+            "deviceId": "1a27cae7",
+            "name": "com.DefaultCompanyAR.EdCircuitAR",
+            "processId": 20100,
+            "exited": true
+        },
+        {
+            "deviceId": "1a27cae7",
+            "name": "com.DefaultCompanyAR.EdCircuitAR",
+            "processId": 21270,
+            "exited": true
+        },
+        {
+            "deviceId": "1a27cae7",
+            "name": "com.DefaultCompanyAR.EdCircuitAR",
+            "processId": 22961,
             "exited": false
         },
         {
             "deviceId": "1a27cae7",
-            "name": "com.DefaultCompany.EdCircuit",
-            "processId": 21676,
+            "name": "com.DefaultCompanyAR.EdCircuitAR",
+            "processId": 27913,
             "exited": false
         },
         {
             "deviceId": "1a27cae7",
-            "name": "com.DefaultCompany.EdCircuit",
-            "processId": 23727,
+            "name": "com.DefaultCompanyAR.EdCircuitAR",
+            "processId": 14762,
             "exited": false
         },
         {
             "deviceId": "1a27cae7",
-            "name": "com.DefaultCompany.EdCircuit",
-            "processId": 26342,
+            "name": "com.DefaultCompanyAR.EdCircuitAR",
+            "processId": 16590,
+            "exited": false
+        },
+        {
+            "deviceId": "1a27cae7",
+            "name": "com.DefaultCompanyAR.EdCircuitAR",
+            "processId": 18048,
+            "exited": false
+        },
+        {
+            "deviceId": "1a27cae7",
+            "name": "com.DefaultCompanyAR.EdCircuitAR",
+            "processId": 19491,
+            "exited": false
+        },
+        {
+            "deviceId": "1a27cae7",
+            "name": "com.DefaultCompanyAR.EdCircuitAR",
+            "processId": 21888,
             "exited": false
         }
     ],
@@ -77,7 +95,7 @@
             },
             {
                 "m_Name": "No Filter",
-                "m_Selected": true
+                "m_Selected": false
             },
             {
                 "m_Name": "",
@@ -93,7 +111,7 @@
             },
             {
                 "m_Name": "Unity",
-                "m_Selected": false
+                "m_Selected": true
             },
             {
                 "m_Name": "CRASH",

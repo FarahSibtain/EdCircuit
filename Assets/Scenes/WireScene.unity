@@ -1363,7 +1363,7 @@ MonoBehaviour:
   - {fileID: 9220178965797951752, guid: 5d577a27fcaf27a40aae7c782597d3a3, type: 3}
   - {fileID: 2015001568328326660, guid: 90b52cedbf72c04409dc2a764db62419, type: 3}
   - {fileID: 2015001568328326660, guid: 4f617c2aafb894d4e84a719f9823dc1c, type: 3}
-  scaleFactor: {x: 0.03, y: 0.03, z: 0.03}
+  scaleFactor: {x: 0.015, y: 0.015, z: 0.015}
 --- !u!114 &1880304684
 MonoBehaviour:
   m_ObjectHideFlags: 0

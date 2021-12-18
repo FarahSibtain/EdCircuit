@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 [RequireComponent(typeof(ARTrackedImageManager))]
 public class TrackedImageManager : MonoBehaviour
@@ -20,17 +21,17 @@ public class TrackedImageManager : MonoBehaviour
     private Dictionary<string, GameObject> arObjects = new Dictionary<string, GameObject>();
 
     void Awake()
-    {        
+    {
         m_TrackedImageManager = GetComponent<ARTrackedImageManager>();
 
         // setup all game objects in dictionary
-        foreach (GameObject arObject in arObjectsToPlace)
-        {
-            GameObject newARObject = Instantiate(arObject, Vector3.zero, Quaternion.identity);
-            newARObject.SetActive(false);
-            newARObject.name = arObject.name;
-            arObjects.Add(arObject.name, newARObject);
-        }
+        //foreach (GameObject arObject in arObjectsToPlace)
+        //{
+        //    GameObject newARObject = Instantiate(arObject, Vector3.zero, Quaternion.identity);
+        //    newARObject.SetActive(false);
+        //    newARObject.name = arObject.name;
+        //    arObjects.Add(arObject.name, newARObject);
+        //}
     }
 
     void OnEnable()
@@ -41,23 +42,74 @@ public class TrackedImageManager : MonoBehaviour
     void OnDisable()
     {
         m_TrackedImageManager.trackedImagesChanged -= OnTrackedImagesChanged;
-    }    
+    }
+
+    //void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs eventArgs)
+    //{
+    //    foreach (ARTrackedImage trackedImage in eventArgs.added)
+    //    {
+    //        UpdateARImage(trackedImage);
+    //    }
+
+    //    foreach (ARTrackedImage trackedImage in eventArgs.updated)
+    //    {
+    //        UpdateARImage(trackedImage);
+    //    }
+
+    //    foreach (ARTrackedImage trackedImage in eventArgs.removed)
+    //    {
+    //        arObjects[trackedImage.name].SetActive(false);
+    //    }
+    //}
 
     void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs eventArgs)
     {
         foreach (ARTrackedImage trackedImage in eventArgs.added)
         {
-            UpdateARImage(trackedImage);
+            foreach (GameObject go in arObjectsToPlace)
+            {
+                if (go.name == trackedImage.referenceImage.name)
+                {                    
+                    GameObject GO = Instantiate(go, trackedImage.transform.position, Quaternion.identity);
+                    GO.transform.localScale = scaleFactor;
+                    //newARObject.SetActive(false);
+                    //GO.name = arObject.name;
+                    arObjects.Add(trackedImage.referenceImage.name, GO);
+                }
+            }
+            //UpdateARImage(trackedImage);            
         }
 
         foreach (ARTrackedImage trackedImage in eventArgs.updated)
         {
-            UpdateARImage(trackedImage);
+            //UpdateARImage(trackedImage);
+            if (trackedImage.trackingState == TrackingState.Tracking)
+            {
+                GameObject GO; 
+                if (arObjects.TryGetValue(trackedImage.referenceImage.name, out GO))
+                {
+                    GO.transform.position = trackedImage.transform.position;
+                    GO.SetActive(true);
+                }               
+            }
+            else
+            {
+                GameObject GO;
+                if (arObjects.TryGetValue(trackedImage.referenceImage.name, out GO))
+                {
+                    GO.SetActive(false);
+                }                
+            }
         }
 
         foreach (ARTrackedImage trackedImage in eventArgs.removed)
         {
-            arObjects[trackedImage.name].SetActive(false);
+            // arObjects[trackedImage.name].SetActive(false);
+            GameObject GO;
+            if (arObjects.TryGetValue(trackedImage.referenceImage.name, out GO))
+            {
+                Destroy(GO);
+            }
         }
     }
 
