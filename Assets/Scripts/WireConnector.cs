@@ -14,6 +14,14 @@ public class WireConnector : MonoBehaviour
 
     float x, y, z = 0;
 
+    public string GetConnectedIstrConnector()
+    {
+        if (ConnectedInstrConnector == null)
+            return "";
+        else
+            return ConnectedInstrConnector.name;
+    }
+
     public bool IsConnected()
     {
         return isConnected;
@@ -48,7 +56,7 @@ public class WireConnector : MonoBehaviour
     //    ConnectedInstrument = connectedInstrument;
     //}
 
-    private void Disconnect()
+    public void Disconnect()
     {
         isConnected = false;
         ConnectedInstrConnector = null;

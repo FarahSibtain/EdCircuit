@@ -7,7 +7,7 @@ public class Verifications : MonoBehaviour
 {
     Button btnDisconnect = null;
 
-    Button btnReset = null;
+    //Button btnReset = null;
 
     List<Vector3> GOposition = new List<Vector3>();
 
@@ -22,9 +22,9 @@ public class Verifications : MonoBehaviour
 
         btnDisconnect.onClick.AddListener(OnDisconnectBtnClick);
 
-        btnReset = GameObject.Find("btnReset").GetComponent<Button>();
+        //btnReset = GameObject.Find("btnReset").GetComponent<Button>();
 
-        btnReset.onClick.AddListener(OnResetBtnClick);
+        //btnReset.onClick.AddListener(OnResetBtnClick);
 
         errorText = GameObject.Find("ErrorText").GetComponent<Text>();
 

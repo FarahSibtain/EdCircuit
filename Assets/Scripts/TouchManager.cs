@@ -11,13 +11,15 @@ public class TouchManager : MonoBehaviour
     private bool onTouchHold = false;
     private bool isPlayer = false;
 
-    public static GameObject SelectedObj = null;
+    float yPosition = 0f;
 
+    public static GameObject SelectedObj = null;
+        
     Text text;
 
     private void Start()
     {
-        text = GameObject.FindObjectOfType<Text>();
+        text = GameObject.FindObjectOfType<Text>();        
     }
 
     private Ray GenerateMouseRay(Touch touch)
@@ -34,6 +36,30 @@ public class TouchManager : MonoBehaviour
     }
 
     // Update is called once per frame
+    //void Update()
+    //{
+    //    if (Input.touchCount == 0)
+    //        return;
+
+    //    Touch touch = Input.GetTouch(0);
+
+    //    //if (Input.GetMouseButtonDown(0))
+    //    if(touch.phase == TouchPhase.Moved)
+    //    {
+    //        Ray mouseRay = GenerateMouseRay(touch);
+    //        RaycastHit hit;
+
+    //        if (Physics.Raycast(mouseRay.origin, mouseRay.direction, out hit) && (hit.transform.gameObject.tag == "instrument" || hit.transform.gameObject.tag == "Player"))
+    //        {
+    //            SelectedObj = gobj = hit.transform.gameObject;
+
+    //            SelectedObj.transform.position = new Vector3(SelectedObj.transform.position.x + touch.deltaPosition.x * speedModifier, SelectedObj.transform.position.y, SelectedObj.transform.position.z + touch.deltaPosition.y * speedModifier);
+
+    //        }
+    //    }      
+
+    //}
+
     void Update()
     {
         if (Input.touchCount == 0)
@@ -42,7 +68,7 @@ public class TouchManager : MonoBehaviour
         Touch touch = Input.GetTouch(0);
 
         //if (Input.GetMouseButtonDown(0))
-        if(touch.phase == TouchPhase.Began)
+        if (touch.phase == TouchPhase.Began)
         {
             Ray mouseRay = GenerateMouseRay(touch);
             RaycastHit hit;
@@ -50,7 +76,8 @@ public class TouchManager : MonoBehaviour
             if (Physics.Raycast(mouseRay.origin, mouseRay.direction, out hit) && (hit.transform.gameObject.tag == "instrument" || hit.transform.gameObject.tag == "Player"))
             {
                 SelectedObj = gobj = hit.transform.gameObject;
-                objPlane = new Plane(Vector3.up, gobj.transform.position);
+                yPosition = gobj.transform.localPosition.y;
+                objPlane = new Plane(transform.up, gobj.transform.position);
 
                 //Ray mRay = Camera.main.ScreenPointToRay(Input.mousePosition);
                 Ray mRay = Camera.main.ScreenPointToRay(touch.position);
@@ -77,6 +104,9 @@ public class TouchManager : MonoBehaviour
             {
                 //gobj.transform.SetPositionAndRotation(mRay.GetPoint(rayDistance) + m0, Quaternion.identity);
                 gobj.transform.position = mRay.GetPoint(rayDistance) + m0;
+
+                //Make sure that the insrument is not raised or get lower than the plane
+                gobj.transform.localPosition = new Vector3(gobj.transform.localPosition.x, yPosition, gobj.transform.localPosition.z);
             }
             onTouchHold = false;
             //if (gobj.tag == "Player")
@@ -100,10 +130,10 @@ public class TouchManager : MonoBehaviour
                 //{
                 //    
                 //}
-                rayDistance -= 0.01f;
+                rayDistance -= (0.03f * rayDistance);
                 //gobj.transform.SetPositionAndRotation(mRay.GetPoint(rayDistance) + m0, Quaternion.identity);
                 gobj.transform.position = mRay.GetPoint(rayDistance) + m0;
             }
-        }       
+        }
     }
 }

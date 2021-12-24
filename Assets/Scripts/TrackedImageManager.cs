@@ -18,7 +18,7 @@ public class TrackedImageManager : MonoBehaviour
 
     private ARTrackedImageManager m_TrackedImageManager;
 
-    private Dictionary<string, GameObject> arObjects = new Dictionary<string, GameObject>();
+    private Dictionary<string, GameObject> arObjects = new Dictionary<string, GameObject>();   
 
     void Awake()
     {
@@ -143,6 +143,33 @@ public class TrackedImageManager : MonoBehaviour
                     //comp.ResetInstruments();
 
                     //go.transform.position = new Vector3(500f, 500f, 500f);
+                }
+            }
+        }
+    }
+
+    public void OnResetButtonClicked()
+    {
+        foreach (GameObject go in arObjects.Values)
+        {
+            if (go.activeSelf)
+            {                 
+                switch (go.name)
+                {
+                    case "bookFinal(Clone)":
+                        ConectionVerfication verification2 = go.GetComponent<ConectionVerfication>();
+                        verification2.ResetInstruments();
+                        break;
+
+                    case "Circuit1(Clone)":
+                        Circuit1Verification verification1 = go.GetComponent<Circuit1Verification>();
+                        verification1.ResetInstruments();
+                        break;
+
+                    case "Circuit3(Clone)":
+                        Circuit3Verification verification3 = go.GetComponent<Circuit3Verification>();
+                        verification3.ResetInstruments();
+                        break;
                 }
             }
         }

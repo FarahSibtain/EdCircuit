@@ -3,87 +3,75 @@
     "m_SelectedPackage": {
         "deviceId": "1a27cae7",
         "name": "com.DefaultCompanyAR.EdCircuitAR",
-        "processId": 21888,
+        "processId": 29805,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "1a27cae7",
-            "name": "com.miui.home",
-            "processId": 2438,
-            "exited": false
-        },
-        {
-            "deviceId": "1a27cae7",
             "name": "com.DefaultCompanyAR.EdCircuitAR",
-            "processId": 16134,
+            "processId": 28055,
             "exited": true
         },
         {
             "deviceId": "1a27cae7",
             "name": "com.DefaultCompanyAR.EdCircuitAR",
-            "processId": 17095,
+            "processId": 29147,
             "exited": true
         },
         {
             "deviceId": "1a27cae7",
             "name": "com.DefaultCompanyAR.EdCircuitAR",
-            "processId": 18736,
+            "processId": 727,
             "exited": true
         },
         {
             "deviceId": "1a27cae7",
             "name": "com.DefaultCompanyAR.EdCircuitAR",
-            "processId": 20100,
+            "processId": 3805,
             "exited": true
         },
         {
             "deviceId": "1a27cae7",
             "name": "com.DefaultCompanyAR.EdCircuitAR",
-            "processId": 21270,
+            "processId": 6838,
             "exited": true
         },
         {
             "deviceId": "1a27cae7",
-            "name": "com.DefaultCompanyAR.EdCircuitAR",
-            "processId": 22961,
+            "name": "com.XARM.FurnitAR3",
+            "processId": 3844,
             "exited": false
         },
         {
             "deviceId": "1a27cae7",
             "name": "com.DefaultCompanyAR.EdCircuitAR",
-            "processId": 27913,
+            "processId": 11057,
             "exited": false
         },
         {
             "deviceId": "1a27cae7",
             "name": "com.DefaultCompanyAR.EdCircuitAR",
-            "processId": 14762,
+            "processId": 15601,
             "exited": false
         },
         {
             "deviceId": "1a27cae7",
             "name": "com.DefaultCompanyAR.EdCircuitAR",
-            "processId": 16590,
+            "processId": 23014,
             "exited": false
         },
         {
             "deviceId": "1a27cae7",
             "name": "com.DefaultCompanyAR.EdCircuitAR",
-            "processId": 18048,
+            "processId": 25471,
             "exited": false
         },
         {
             "deviceId": "1a27cae7",
             "name": "com.DefaultCompanyAR.EdCircuitAR",
-            "processId": 19491,
-            "exited": false
-        },
-        {
-            "deviceId": "1a27cae7",
-            "name": "com.DefaultCompanyAR.EdCircuitAR",
-            "processId": 21888,
+            "processId": 29805,
             "exited": false
         }
     ],

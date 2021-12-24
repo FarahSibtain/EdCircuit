@@ -24,7 +24,7 @@ public class Circuit3Verification : Verifications
     // Update is called once per frame
     void Update()
     {        
-        if (SwitchKey.IsClosed() && IsCircuitClosed())
+        if (SwitchKey.IsClosed() && IsCircuitClosed2())
         {
             lamp.TurnOnLight();
             Ammeter.SetText("3 A");
@@ -84,6 +84,40 @@ public class Circuit3Verification : Verifications
 
     }
 
+    bool IsCircuitClosed2()
+    {
+        List<string> instrNames = Battery.GetConnectedInstrumentNames();
+        if (!instrNames.Contains(lamp.name) || !instrNames.Contains(SwitchKey.name))
+        {
+            errorText.text = "Incorrect circuit";
+            return false;
+        }
+
+        instrNames = lamp.GetConnectedInstrumentNames();
+        if (!instrNames.Contains(Battery.name) || !instrNames.Contains(Ammeter.name))
+        {
+            errorText.text = "Incorrect circuit";
+            return false;
+        }
+
+        instrNames = Ammeter.GetConnectedInstrumentNames();
+        if (!instrNames.Contains(lamp.name) || !instrNames.Contains(SwitchKey.name))
+        {
+            errorText.text = "Incorrect circuit";
+            return false;
+        }
+
+        instrNames = SwitchKey.GetConnectedInstrumentNames();
+        if (!instrNames.Contains(Ammeter.name) || !instrNames.Contains(Battery.name))
+        {
+            errorText.text = "Incorrect circuit";
+            return false;
+        }
+
+        errorText.text = "Circuit is closed!";
+        return true;
+    }
+
     bool IsCircuitClosed()
     {
         try
@@ -101,65 +135,95 @@ public class Circuit3Verification : Verifications
 
             if (instrNames == null || instrNames.Count == 0)
             {
-                errorText.text = "No instrument connected to 1st wire";
+                errorText.text = "No instrument connected to 1st wire of Battery";
                 return false;
             }
 
             // Instrument 1
             Instrument instru = GetConnectedInstrumentFromName(instrNames[0]);
 
-            wire = instru.GetOtherConnectedWire(wire);
+            List<Wire> wires = instru.GetOtherConnectedWires(wire);
 
-            if (wire == null)
+            if (wires.Count == 0)
             {
-                errorText.text = "No wire connected to first instrument";
+                errorText.text = "No wire connected to instrument " + instru.name;
                 return false;
             }
-
-            instrNames = wire.GetConnectedInstrumentNames(new List<string>() { instru.name, Voltmeter.name });
-
-            if (instrNames == null || instrNames.Count == 0)
+            else
             {
-                errorText.text = "No instrument connected to 2nd wire";
-                return false;
-            }
+                instrNames = new List<string>();
+                foreach (Wire conwire in wires)
+                {
+                    List<string> instrumentNames = conwire.GetConnectedInstrumentNames(new List<string>() { instru.name, Voltmeter.name });
+
+                    if (instrumentNames.Count != 0)
+                    {
+                        instrNames = instrumentNames;                           
+                    }                    
+                }  
+                if (instrNames.Count == 0)
+                {
+                    errorText.text = "No valid instrument connected to 2nd wire of " + instru.name;
+                    return false;
+                }
+            }            
 
             // Instrument 2
             instru = GetConnectedInstrumentFromName(instrNames[0]);
 
-            wire = instru.GetOtherConnectedWire(wire);
+            wires = instru.GetOtherConnectedWires(wire);
 
-            if (wire == null)
+            if (wires.Count == 0)
             {
-                errorText.text = "No wire connected to second instrument";
+                errorText.text = "No wire connected to instrument " + instru.name;
                 return false;
             }
-
-            instrNames = wire.GetConnectedInstrumentNames(new List<string>() { instru.name, Voltmeter.name });
-
-            if (instrNames == null || instrNames.Count == 0)
+            else
             {
-                errorText.text = "No instrument connected to 3rd wire";
-                return false;
-            }
+                instrNames = new List<string>();
+                foreach (Wire conwire in wires)
+                {
+                    List<string> instrumentNames = conwire.GetConnectedInstrumentNames(new List<string>() { instru.name, Voltmeter.name });
+
+                    if (instrumentNames.Count != 0)
+                    {
+                        instrNames = instrumentNames;
+                    }
+                }
+                if (instrNames.Count == 0)
+                {
+                    errorText.text = "No valid instrument connected to 2nd wire of " + instru.name;
+                    return false;
+                }
+            }            
 
             // Instrument 3
             instru = GetConnectedInstrumentFromName(instrNames[0]);
 
-            wire = instru.GetOtherConnectedWire(wire);
+            wires = instru.GetOtherConnectedWires(wire);
 
-            if (wire == null)
+            if (wires.Count == 0)
             {
-                errorText.text = "No wire connected to third instrument";
+                errorText.text = "No wire connected to instrument " + instru.name;
                 return false;
             }
-
-            instrNames = wire.GetConnectedInstrumentNames(new List<string>() { instru.name, Voltmeter.name });
-
-            if (instrNames == null || instrNames.Count == 0)
+            else
             {
-                errorText.text = "No instrument connected to 4th wire";
-                return false;
+                instrNames = new List<string>();
+                foreach (Wire conwire in wires)
+                {
+                    List<string> instrumentNames = conwire.GetConnectedInstrumentNames(new List<string>() { instru.name, Voltmeter.name });
+
+                    if (instrumentNames.Count != 0)
+                    {
+                        instrNames = instrumentNames;
+                    }
+                }
+                if (instrNames.Count == 0)
+                {
+                    errorText.text = "No valid instrument connected to 2nd wire of " + instru.name;
+                    return false;
+                }
             }
 
             if (instrNames[0] == Battery.name)

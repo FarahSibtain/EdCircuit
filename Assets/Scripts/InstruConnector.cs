@@ -126,26 +126,55 @@ public class InstruConnector : MonoBehaviour
         {
             ApplyConnection(collision);
         }
-    }    
+    }
+
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    Debug.Log("OnCollisionExit called");
+    //    WireConnector wireConnector = collision.gameObject.GetComponent<WireConnector>();
+    //    if (wireConnector != null && wireConnector.GetConnectedIstrConnector() != this.name)
+    //    {
+    //        FixedJoint[] fjComponents = gameObject.GetComponents<FixedJoint>();
+    //        foreach (FixedJoint comp in fjComponents)
+    //        {
+    //            Rigidbody obj = comp.connectedBody;
+    //            if (obj != null && obj.gameObject.name == wireConnector.name)
+    //            {
+    //                obj.constraints = RigidbodyConstraints.FreezeAll;
+    //                Destroy(comp);                    
+    //            }                
+    //        }
+    //        Wire ConnectedWire = wireConnector.PartOfWire;
+    //        ConnectedWires.Remove(ConnectedWire);
+    //    }
+    //}
 
     public List<string> GetConnectedInstrumentNames()
     {
         List<string> connectedInstruments = new List<string>();
-        foreach (Wire wire in ConnectedWires)
-        {
-            List<string> connectedInstr = wire.GetConnectedInstrumentNames();
-            //if any wire is not currently connected to this instrument Connector, then remove the wire from the array
-            if (!connectedInstr.Contains(parentInstrument.gameObject.name))
-            {                
-                ConnectedWires.Remove(wire);
-            }
-            foreach (string instrumentname in connectedInstr)
+        try
+        {            
+            foreach (Wire wire in ConnectedWires)
             {
-                if (!connectedInstruments.Contains(instrumentname))
+                List<string> connectedInstr = wire.GetConnectedInstrumentNames();
+                //if any wire is not currently connected to this instrument Connector, then remove the wire from the array
+                if (!connectedInstr.Contains(parentInstrument.gameObject.name))
                 {
-                    connectedInstruments.Add(instrumentname);
+                    ConnectedWires.Remove(wire);
                 }
-            }            
+                foreach (string instrumentname in connectedInstr)
+                {
+                    if (!connectedInstruments.Contains(instrumentname))
+                    {
+                        connectedInstruments.Add(instrumentname);
+                    }
+                }
+            }
+        }
+        catch(InvalidOperationException e)
+        {
+            Debug.Log("InvalidOperationException occurred");
+            return connectedInstruments;
         }
         return connectedInstruments;
     }
